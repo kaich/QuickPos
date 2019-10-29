@@ -1,0 +1,53 @@
+{
+    "manifest_version": 2,
+    "name": "QuickPos",
+    "description": "快速定位页面内容.",
+    "version": "1.0.0",
+    "icons": {
+      "16": "image/quick-pos-16.png",
+      "128": "image/quick-pos-128.png"
+    },
+    "browser_action": {
+      "default_icon": {
+        "19": "image/quick-pos-38.png",
+        "38": "image/quick-pos-19.png"
+      },
+      "default_title": "QuickPos",
+      "default_popup": "popup.html"
+    },
+    "permissions": [
+        "tabs", 
+        "storage",
+        "activeTab",
+        "https://*/*",
+		"http://*/*"
+    ],
+    "background": {
+      "persistent": false,
+      "scripts": [
+        "background.js"
+      ]
+    },
+    "content_scripts": [
+		{
+			"matches": [
+				"http://*/*",
+				"https://*/*"
+			],
+			"exclude_matches": [
+				"*://*/*.xml",
+				"*://*/*.xsd"
+			],
+			"js": [
+				"node_modules/jquery/dist/jquery.min.js",
+				"inject_sidebar.js"
+            ],
+            "css": [
+                "inject.css"
+            ],
+			"run_at": "document_end",
+			"all_frames": true
+		}
+	],
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+  }
